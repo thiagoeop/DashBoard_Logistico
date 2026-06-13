@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Dashboard Logístico</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<header>
+    <h1>🚚 Dashboard Inteligente de Monitoramento Logístico</h1>
+</header>
+
+<section class="kpis">
+
+    <div class="card">
+        <h3>Total Entregas</h3>
+        <span id="total"></span>
+    </div>
+
+    <div class="card">
+        <h3>Atrasadas</h3>
+        <span id="atrasadas"></span>
+    </div>
+
+    <div class="card">
+        <h3>% Atraso</h3>
+        <span id="percentual"></span>
+    </div>
+
+    <div class="card">
+        <h3>Média Dias</h3>
+        <span id="media"></span>
+    </div>
+
+</section>
+
+<section class="graficos">
+
+    <div class="grafico">
+        <h2>Atrasos por Transportadora</h2>
+        <canvas id="transportadoras"></canvas>
+    </div>
+
+    <div class="grafico">
+        <h2>Atrasos por Região</h2>
+        <canvas id="regioes"></canvas>
+    </div>
+
+</section>
+
+<section>
+
+    <h2>🚨 Entregas Prioritárias</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Região</th>
+                <th>Transportadora</th>
+                <th>Dias de Atraso</th>
+            </tr>
+        </thead>
+
+        <tbody id="tabela"></tbody>
+
+    </table>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
