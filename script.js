@@ -1,102 +1,79 @@
-fetch("entregas.json")
-.then(response => response.json())
-.then(dados => {
+const entregas = [
+    { id: 301, transportadora: "RotaMax", regioes: "Sudeste", prazo: 3, real: 7 },
+    { id: 302, transportadora: "ViaCargo", regioes: "Sul", prazo: 5, real: 5 },
+    { id: 303, transportadora: "FlashLog", regioes: "Nordeste", prazo: 4, real: 9 },
+    { id: 304, transportadora: "RotaMax", regioes: "Norte", prazo: 6, real: 4 },
+    { id: 305, transportadora: "ViaCargo", regioes: "Centro-Oeste", prazo: 2, real: 6 },
+    { id: 306, transportadora: "FlashLog", regioes: "Sul", prazo: 5, real: 12 },
+    { id: 307, transportadora: "RotaMax", regioes: "Sul", prazo: 6, real: 9 },
+    { id: 308, transportadora: "ViaCargo", regioes: "Sudeste", prazo: 3, real: 4 },
+    { id: 309, transportadora: "FlashLog", regioes: "Norte", prazo: 5, real: 5 },
+    { id: 310, transportadora: "ViaCargo", regioes: "Nordeste", prazo: 4, real: 8 }
+];
 
-const total = dados.length;
+// Identifica atrasos
+const atrasadas = entregas.filter(e => e.real > e.prazo);
 
-const atrasadas = dados.filter(
-item => item.status === "Atrasada"
-);
+// KPIs
+document.getElementById("total").textContent = entregas.length;
+document.getElementById("atrasadas").textContent = atrasadas.length;
+document.getElementById("percentual").textContent =
+    ((atrasadas.length / entregas.length) * 100).toFixed(1) + "%";
 
-const percentual =
-((atrasadas.length / total) * 100).toFixed(1);
+const mediaDias =
+    entregas.reduce((soma, e) => soma + e.real, 0) / entregas.length;
 
-const media =
-(
-atrasadas.reduce(
-(acc,item)=> acc + item.atraso,0
-)
-/
-atrasadas.length
-).toFixed(1);
+document.getElementById("media").textContent = mediaDias.toFixed(1);
 
-document.getElementById("total").innerText = total;
+// Tabela de entregas prioritárias
+const tabela = document.getElementById("tabela");
 
-document.getElementById("atrasadas").innerText =
-atrasadas.length;
+atrasadas.forEach(e => {
+    const atraso = e.real - e.prazo;
 
-document.getElementById("percentual").innerText =
-percentual + "%";
-
-document.getElementById("media").innerText =
-media;
-
-const transp = {};
-
-atrasadas.forEach(item => {
-
-transp[item.transportadora] =
-(transp[item.transportadora] || 0) + 1;
-
+    tabela.innerHTML += `
+        <tr>
+            <td>${e.id}</td>
+            <td>${e.regioes}</td>
+            <td>${e.transportadora}</td>
+            <td>${atraso}</td>
+        </tr>
+    `;
 });
 
-new Chart(
-document.getElementById("transportadoras"),
-{
-type:"bar",
-data:{
-labels:Object.keys(transp),
-datasets:[{
-label:"Atrasos",
-data:Object.values(transp)
-}]
-}
-}
-);
+// Atrasos por transportadora
+const atrasoTransportadora = {};
 
-const regioes = {};
-
-atrasadas.forEach(item => {
-
-regioes[item.regiao] =
-(regioes[item.regiao] || 0) + 1;
-
+atrasadas.forEach(e => {
+    atrasoTransportadora[e.transportadora] =
+        (atrasoTransportadora[e.transportadora] || 0) + 1;
 });
 
-new Chart(
-document.getElementById("regioes"),
-{
-type:"pie",
-data:{
-labels:Object.keys(regioes),
-datasets:[{
-data:Object.values(regioes)
-}]
-}
-}
-);
-
-atrasadas
-.sort((a,b)=> b.atraso - a.atraso)
-.forEach(item=>{
-
-let classe =
-item.atraso >= 3
-? "critico"
-: "";
-
-document
-.getElementById("tabela")
-.innerHTML +=
-`
-<tr class="${classe}">
-<td>${item.id}</td>
-<td>${item.regiao}</td>
-<td>${item.transportadora}</td>
-<td>${item.atraso}</td>
-</tr>
-`;
-
+new Chart(document.getElementById("transportadoras"), {
+    type: "bar",
+    data: {
+        labels: Object.keys(atrasoTransportadora),
+        datasets: [{
+            label: "Entregas Atrasadas",
+            data: Object.values(atrasoTransportadora)
+        }]
+    }
 });
 
+// Atrasos por região
+const atrasoRegiao = {};
+
+atrasadas.forEach(e => {
+    atrasoRegiao[e.regioes] =
+        (atrasoRegiao[e.regioes] || 0) + 1;
+});
+
+new Chart(document.getElementById("regioes"), {
+    type: "pie",
+    data: {
+        labels: Object.keys(atrasoRegiao),
+        datasets: [{
+            data: Object.values(atrasoRegiao)
+        }]
+    }
 });
