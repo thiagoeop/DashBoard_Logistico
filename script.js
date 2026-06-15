@@ -1,4 +1,4 @@
-fetch("arquivo_entregas.json")
+fetch("entregas.json")
 .then(response => response.json())
 .then(dados => {
 
