@@ -39,6 +39,20 @@
     --shadow-xl: 0 20px 25px -5px rgba(15, 23, 42, 0.1);
 }
 
+body.dark-theme {
+    --text-dark: #f8fafc;
+    --text-gray: #cbd5e1;
+    --text-light: #e2e8f0;
+    --bg-primary: #0f172a;
+    --bg-secondary: #111827;
+    --bg-tertiary: #1f2937;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.35);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.35);
+    background: linear-gradient(135deg, #020617 0%, #111827 100%);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -56,6 +70,10 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     padding: 24px 16px;
+}
+
+body.dark-theme {
+    color: var(--text-dark);
 }
 
 .container-main {
@@ -142,7 +160,7 @@ body {
     gap: 16px;
     box-shadow: var(--shadow-md);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid #f1f5f9;
+    border: 1px solid var(--bg-tertiary);
     position: relative;
     overflow: hidden;
 }
@@ -261,7 +279,7 @@ body {
     padding: 24px;
     box-shadow: var(--shadow-md);
     transition: all 0.3s;
-    border: 1px solid #f1f5f9;
+    border: 1px solid var(--bg-tertiary);
 }
 
 .chart-container:hover {
@@ -287,7 +305,7 @@ body {
     border-radius: 12px;
     padding: 24px;
     box-shadow: var(--shadow-md);
-    border: 1px solid #f1f5f9;
+    border: 1px solid var(--bg-tertiary);
 }
 
 .section-header {
@@ -588,7 +606,7 @@ body {
 }
 
 .filter-select {
-    background: white;
+    background: var(--bg-primary);
     border: 1px solid var(--bg-tertiary);
     border-radius: 6px;
     padding: 8px 12px;
@@ -676,7 +694,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 1000;
-    background: white;
+    background: var(--bg-primary);
     border-radius: 12px;
     box-shadow: var(--shadow-xl);
     max-width: 500px;
