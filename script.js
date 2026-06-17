@@ -19,26 +19,12 @@ const appState = {
     sortOrder: 'desc',
     viewLimit: 10,
     searchTerm: '',
-    theme: localStorage.getItem('dashboardTheme') || 'light',
     filters: {
         transportadora: '',
         regiao: '',
         criticidade: ''
     }
 };
-
-function applyTheme(theme) {
-    const body = document.body;
-    const isDark = theme === 'dark';
-    body.classList.toggle('dark-theme', isDark);
-    appState.theme = theme;
-    localStorage.setItem('dashboardTheme', theme);
-
-    const themeLabel = document.getElementById('theme-label');
-    if (themeLabel) {
-        themeLabel.textContent = isDark ? '☀️ Claro' : '🌙 Escuro';
-    }
-}
 
 // Paleta de cores moderna
 const cores = {
@@ -364,17 +350,9 @@ function setupEventListeners() {
     });
     
     document.getElementById('btn-export').addEventListener('click', () => {
-        exportToCSV(appState.filteredData.length > 0 ? appState.filteredData : appState.atrasadas, 'entregas_atrasadas.csv');
+        exportToExcel(appState.filteredData.length > 0 ? appState.filteredData : appState.atrasadas, 'entregas_atrasadas.xls');
         showNotification('Dados exportados com sucesso!', 'success');
     });
-
-    const themeToggle = document.getElementById('btn-theme-toggle');
-    if (themeToggle) {
-        themeToggle.addEventListener('click', () => {
-            applyTheme(appState.theme === 'dark' ? 'light' : 'dark');
-            showNotification(`Tema ${appState.theme === 'dark' ? 'escuro' : 'claro'} ativado`, 'info');
-        });
-    }
     
     document.getElementById('modal-close').addEventListener('click', closeModal);
     document.getElementById('btn-modal-close').addEventListener('click', closeModal);
@@ -401,7 +379,4 @@ function showNotification(message, type = 'success') {
     setTimeout(() => notif.remove(), 3000);
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    init();
-    applyTheme(appState.theme);
-});
+document.addEventListener('DOMContentLoaded', init);
