@@ -59,21 +59,7 @@ body {
 }
 
 body.dark-theme {
-    background: linear-gradient(135deg, #0f172a 0%, #1a1f3a 100%);
-    color: var(--text-light);
-    
-    --text-dark: #f1f5f9;
-    --text-gray: #cbd5e1;
-    --text-light: #e2e8f0;
-    
-    --bg-primary: #1e293b;
-    --bg-secondary: #0f172a;
-    --bg-tertiary: #334155;
-    
-    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
-    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
-    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+    color: var(--text-dark);
 }
 
 .container-main {
@@ -797,50 +783,6 @@ body.dark-theme {
 .notification-info {
     background: var(--info-600);
     color: white;
-}
-
-/* ========== DARK THEME SPECIFIC OVERRIDES ========== */
-body.dark-theme .data-table tbody tr:hover {
-    background-color: rgba(59, 130, 246, 0.15);
-}
-
-body.dark-theme .filter-select {
-    background: var(--bg-primary);
-    color: var(--text-dark);
-}
-
-body.dark-theme .filter-select option {
-    background: var(--bg-primary);
-    color: var(--text-dark);
-}
-
-body.dark-theme #search-input {
-    color: var(--text-dark);
-}
-
-body.dark-theme #search-input::placeholder {
-    color: var(--text-gray);
-}
-
-body.dark-theme .modal-backdrop {
-    background: rgba(0, 0, 0, 0.8);
-}
-
-body.dark-theme .btn-small {
-    background: var(--bg-tertiary);
-    color: var(--text-dark);
-}
-
-body.dark-theme .btn-small:hover {
-    background: rgba(59, 130, 246, 0.2);
-    color: var(--info-500);
-}
-
-body.dark-theme .icon-blue,
-body.dark-theme .icon-orange,
-body.dark-theme .icon-red,
-body.dark-theme .icon-green {
-    filter: brightness(0.6);
 }
 
 /* ========== RESPONSIVE ========== */
