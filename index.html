@@ -33,9 +33,6 @@
                         <button class="btn btn-secondary" id="btn-export" title="Exportar dados">
                             <span>📥 Exportar</span>
                         </button>
-                        <button class="btn btn-secondary" id="btn-theme-toggle" title="Alternar tema">
-                            <span id="theme-label">🌙 Escuro</span>
-                        </button>
                     </div>
                 </div>
                 <p class="header-subtitle">Monitoramento Inteligente de Entregas</p>
@@ -185,17 +182,24 @@
     <script src="script.js"></script>
     <!-- Utilitários de Exportação e Notificações -->
     <script>
-        // Função para exportar CSV
-        window.exportToCSV = function(data, filename) {
-            const csv = [
+        // Função para exportar para Excel (.xls)
+        window.exportToExcel = function(data, filename) {
+            const tableRows = [
                 ['ID', 'Região', 'Transportadora', 'Dias de Atraso'],
                 ...data.map(row => [row.id, row.regioes, row.transportadora, row.real - row.prazo])
-            ].map(row => row.join(',')).join('\n');
-            
+            ];
+
+            const tableHtml = '<table>' + tableRows.map(row => '<tr>' + row.map(cell => `<td>${cell}</td>`).join('') + '</tr>').join('') + '</table>';
+            const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"></head><body>${tableHtml}</body></html>`;
+            const blob = new Blob([html], { type: 'application/vnd.ms-excel' });
+
             const link = document.createElement('a');
-            link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
-            link.download = filename || 'dashboard_' + new Date().getTime() + '.csv';
+            link.href = URL.createObjectURL(blob);
+            link.download = filename || 'dashboard_' + new Date().getTime() + '.xls';
+            document.body.appendChild(link);
             link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
         };
         
         // Sistema de notificações
